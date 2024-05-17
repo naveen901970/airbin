@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>airbin</title>
+</head>
+<body>
+    <h1>Listing Details</h1>
+    <ul>
+
+        <li><%=newlist1.title %></li>
+        <li><%=newlist1.description %></li>
+        <li> &#8377;<%=newlist1.price.toLocaleString('en-IN')%></li>
+        <li><%=newlist1.location %></li>
+        <li><%=newlist1.country %></li>
+    </ul>
+    <a href="/listings/<%= newlist1._id %>/edit">Edit your listing</a>
+</body>
+</html>

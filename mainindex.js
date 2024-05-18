@@ -8,10 +8,13 @@ const lists=require("./model/schema");
 var methodOverride = require('method-override');
 app.use(methodOverride('_method'))
 
+ const engine = require('ejs-mate');
+
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"/views"))
 
 app.use(express.urlencoded({extended:true}));
+app.engine('ejs', engine);
 
 main().then((res)=>{
     console.log("connection is sucsses")

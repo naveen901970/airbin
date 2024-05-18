@@ -8,13 +8,14 @@ const lists=require("./model/schema");
 var methodOverride = require('method-override');
 app.use(methodOverride('_method'))
 
- const engine = require('ejs-mate');
+const ejsMeta = require('ejs-mate');
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"/views"))
 
 app.use(express.urlencoded({extended:true}));
-app.engine('ejs', engine);
+app.engine('ejs', ejsMeta);
+app.use(express.static(path.join(__dirname,"public")))
 
 main().then((res)=>{
     console.log("connection is sucsses")
@@ -31,17 +32,6 @@ app.get("/listings", async(req,res)=>{
     let newlist= await lists.find();
     res.render("./listing/index.ejs",{newlist})
 })
-
-
-
-//read route in deatail
-app.get("/listings/:id",async(req,res)=>{
-    let {id}=req.params;
-    let newlist1= await lists.findById(id)
-    res.render("./listing/show.ejs",{newlist1})
-})
-
-
 //create route
 app.get("/listings/new",(req,res)=>{
     console.log("this is working");
@@ -49,14 +39,25 @@ app.get("/listings/new",(req,res)=>{
 })
 
 
+//read  show route in deatail
+app.get("/listings/:id",async(req,res)=>{
+    let {id}=req.params;
+    let newlist1= await lists.findById(id)
+    res.render("./listing/show.ejs",{newlist1})
+})
+
+
 app.post("/listings", async(req,res)=>{
-    // let {title,description,image,price,country,location}=req.params;
+   
     let newlisting= new lists(req.body.listing);
        await newlisting.save();
     
        res.redirect("/listings")
 
  })
+
+
+
 
 
  //editing route
